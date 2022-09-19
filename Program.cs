@@ -18,10 +18,11 @@ namespace Semantica
                 }*/
                 a.cerrar();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 //Console.WriteLine("Fin de compilacion");
-                Console.WriteLine("Error de compilacion");
+                //Console.WriteLine("Error de compilacion");
             }
         }
     }
