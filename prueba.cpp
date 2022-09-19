@@ -17,4 +17,5 @@ void main(){
 
     for(d = 10; d<20; d++) {
     }
+    printf("\n\n\n\ta");
 }
