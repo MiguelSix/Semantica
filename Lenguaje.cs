@@ -37,7 +37,8 @@ namespace Semantica
         private void displayVariables()
         {
             log.WriteLine("\n\nVariables:");
-            foreach(Variable v in variables){
+            foreach(Variable v in variables)
+            {
                 log.WriteLine(v.getNombre() + ", " + v.getTipoDato() + ", " + v.getValor());
             }
         }
@@ -78,6 +79,18 @@ namespace Semantica
             return 0;
         }
 
+        private Variable.TipoDato getTipo(string nombreVariable)
+        {
+            foreach(Variable v in variables)
+            {
+                if(v.getNombre().Equals(nombreVariable)) 
+                {
+                    return v.getTipoDato();
+                }
+            }
+            return Variable.TipoDato.Char;
+        }
+
         //Programa  -> Librerias? Variables? Main
         public void Programa()
         {
@@ -113,8 +126,8 @@ namespace Semantica
             {
                 Variable.TipoDato tipo = Variable.TipoDato.Char;
 
-                switch(getContenido()){
-
+                switch(getContenido())
+                {
                     case "int": tipo = Variable.TipoDato.Int; break;
 
                     case "float": tipo = Variable.TipoDato.Float; break;
@@ -132,11 +145,13 @@ namespace Semantica
          //Lista_identificadores -> identificador (,Lista_identificadores)?
         private void Lista_identificadores(Variable.TipoDato tipo)
         {
-            if (getClasificacion() == Tipos.Identificador){
+            if (getClasificacion() == Tipos.Identificador)
+            {
                 if(!existeVariable(getContenido()))
                 {
                     addVariable(getContenido(), tipo);
-                }else
+                }
+                else
                 {
                     throw new Error("Error de sintaxis, variable duplicada <"+ getContenido() + "> en la linea: " + linea, log);
                 }
@@ -214,6 +229,26 @@ namespace Semantica
             {
                 Asignacion();
             }
+        }
+        private Variable.TipoDato evaluaNumero(float resultado){
+            if (resultado <=255)
+            {
+                return Variable.TipoDato.Char;
+            }
+            else if (resultado <= 65535)
+            {
+                return Variable.TipoDato.Int;
+            }
+            //Como saber si un numero tiene parte fraccional
+            return Variable.TipoDato.Float;
+        }
+
+        private bool evaluaSemantica(string nombreVariable, float resultado)
+        {
+            Variable.TipoDato tipoDato = getTipo(nombreVariable);
+
+
+            return false;
         }
 
         //Asignacion -> identificador = cadena | Expresion;

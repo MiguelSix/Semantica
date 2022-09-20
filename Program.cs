@@ -7,7 +7,7 @@ namespace Semantica
         static void Main(string[] args)
         {
             try
-            {
+            {  
                 Lenguaje a = new Lenguaje("C:\\Users\\wachi\\OneDrive\\Escritorio\\Prollecto\\prueba.cpp");
 
                 a.Programa();
