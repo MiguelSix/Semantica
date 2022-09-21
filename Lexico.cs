@@ -63,9 +63,9 @@ namespace Semantica
 public Lexico()
         {
             linea = 1;
-            string path = "C:\\Users\\wachi\\OneDrive\\Escritorio\\Prollecto\\prueba.cpp";
+            string path = "C:\\Users\\wachi\\OneDrive\\Escritorio\\AUTOMATAS\\Semantica\\prueba.cpp";
             bool existencia = File.Exists(path);
-            log = new StreamWriter("C:\\Users\\wachi\\OneDrive\\Escritorio\\Prollecto\\prueba.log"); 
+            log = new StreamWriter("C:\\Users\\wachi\\OneDrive\\Escritorio\\AUTOMATAS\\Semantica\\prueba.log"); 
             log.AutoFlush = true;
             //log.WriteLine("Primer constructor");
             log.WriteLine("Archivo: prueba.cpp");

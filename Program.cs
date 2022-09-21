@@ -8,7 +8,7 @@ namespace Semantica
         {
             try
             {  
-                Lenguaje a = new Lenguaje("C:\\Users\\wachi\\OneDrive\\Escritorio\\Prollecto\\prueba.cpp");
+                Lenguaje a = new Lenguaje("C:\\Users\\wachi\\OneDrive\\Escritorio\\AUTOMATAS\\Semantica\\prueba.cpp");
 
                 a.Programa();
                 

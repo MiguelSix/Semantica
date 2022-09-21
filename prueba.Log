@@ -1,24 +1,6 @@
-Archivo: C:\Users\wachi\OneDrive\Escritorio\Prollecto\prueba.cpp
-Fecha: 12/09/2022 9:14:52
+Archivo: C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\prueba.cpp
+Fecha: 21/09/2022 9:56:45
 
-pi = 3.141592653589793 = 3.1415927
+x = 1.5 1 + = 2.5
 
-
-d = 4 = 4
-
-
-area = pi radio radio * * = 3.1415927
-
-area 
-d = 10 = 10
-
-d 20 
-
-Variables:
-area, Float, 3.1415927
-radio, Float, 1
-pi, Float, 3.1415927
-resultado, Float, 0
-a, Int, 0
-d, Int, 11
-Fin de compilacion
+Eror de semantica en la linea 10: No podemos asignar un <Float> a un <Char>

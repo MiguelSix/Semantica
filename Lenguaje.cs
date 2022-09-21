@@ -11,6 +11,7 @@ namespace Semantica
 
         List<Variable> variables = new List<Variable>();
         Stack<float> stack = new Stack<float>();
+        Variable.TipoDato dominante;
         public Lenguaje()
         {
 
@@ -231,6 +232,10 @@ namespace Semantica
             }
         }
         private Variable.TipoDato evaluaNumero(float resultado){
+            if(resultado % 1 != 0)
+            {
+                return Variable.TipoDato.Float;
+            }
             if (resultado <=255)
             {
                 return Variable.TipoDato.Char;
@@ -239,14 +244,12 @@ namespace Semantica
             {
                 return Variable.TipoDato.Int;
             }
-            //Como saber si un numero tiene parte fraccional
             return Variable.TipoDato.Float;
         }
 
         private bool evaluaSemantica(string nombreVariable, float resultado)
         {
             Variable.TipoDato tipoDato = getTipo(nombreVariable);
-
 
             return false;
         }
@@ -259,19 +262,31 @@ namespace Semantica
             {
                 throw new Error("\nError de sintaxis en la linea: " + linea + ", la variable <"+ getContenido() + "> no existe", log);
             }
-
             log.WriteLine();
             string nombreVariable = getContenido();
             match(Tipos.Identificador);
             log.Write(nombreVariable + " = ");
             match(Tipos.Asignacion);
+            dominante = Variable.TipoDato.Char;
             Expresion();
             match(";");
             float resultado = stack.Pop();
             log.WriteLine("= " + resultado);
             log.WriteLine();
-            //Requerimiento 3:
-            modificaValor(nombreVariable, resultado);
+            Console.WriteLine(dominante);
+            Console.WriteLine(evaluaNumero(resultado));
+            if(dominante < evaluaNumero(resultado))
+            {
+                dominante = evaluaNumero(resultado);
+            }
+            if(dominante <= getTipo(nombreVariable))
+            {
+                modificaValor(nombreVariable, resultado);
+            }
+            else
+            {
+                throw new Error("Eror de semantica en la linea " + linea + ": No podemos asignar un <" + dominante + "> a un <" + getTipo(nombreVariable) + ">", log); 
+            }
         }
 
         //While -> while(Condicion) bloque de instrucciones | instruccion
@@ -541,6 +556,10 @@ namespace Semantica
             if (getClasificacion() == Tipos.Numero)
             {
                 log.Write(getContenido() + " ");
+                if(dominante < evaluaNumero(float.Parse(getContenido())))
+                {
+                    dominante = evaluaNumero(float.Parse(getContenido()));
+                }
                 stack.Push(float.Parse(getContenido()));
                 match(Tipos.Numero);
             }
