@@ -3,6 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+/*              Requerimientos
+* 1. Actualizar el dominante para variables en la expresion
+*       Ejemplo: float x;       char y;       y = x;
+*
+* 2. Actualizar el dominante para el casteo y el valor de la subexpresion
+*
+* 3. Programar un metodo de conversion de un valor a un tipo de dato
+*       private float convert(float valor, string tipoDato)
+*       Deberan usar el residuo de la division %255, %65535    
+*/
+
+
 namespace Semantica
 {
 
@@ -273,8 +285,8 @@ namespace Semantica
             float resultado = stack.Pop();
             log.WriteLine("= " + resultado);
             log.WriteLine();
-            Console.WriteLine(dominante);
-            Console.WriteLine(evaluaNumero(resultado));
+            //Console.WriteLine(dominante);
+            //Console.WriteLine(evaluaNumero(resultado));
             if(dominante < evaluaNumero(resultado))
             {
                 dominante = evaluaNumero(resultado);
@@ -572,13 +584,37 @@ namespace Semantica
             {
                 throw new Error("\nError de sintaxis en la linea: " + linea + ", la variable <"+ getContenido() + "> no existe", log);
             }
+                //Requerimiento 1
                 match(Tipos.Identificador);
             }
             else
             {
+                Variable.TipoDato casteo = Variable.TipoDato.Char;
+                bool huboCasteo = false;
                 match("(");
+                if(getClasificacion() == Tipos.TipoDato)
+                {
+                    //Requerimiento 2:
+                    huboCasteo = true;
+                    casteo = getTipo(getContenido());
+                    match(Tipos.TipoDato);
+                    match(")");
+                    match("(");
+                }
                 Expresion();
                 match(")");
+                if(huboCasteo)
+                {
+                    //Requerimiento 2:
+                    dominante = casteo;
+
+                    //Requerimiento 3:
+                    //Saco un elemento del stack
+                    //Convierto ese valor al equivalente en casteo
+                    //Ejemplo. Si el casteo es char y el pop regresa un 256,
+                    //         el valor equivalente en casteo es cero
+                    //Y meto ese valor al stcak
+                }
             }
         }
     }
