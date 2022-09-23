@@ -1,6 +1,13 @@
 Archivo: C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\prueba.cpp
-Fecha: 22/09/2022 9:18:31
+Fecha: 23/09/2022 10:04:08
+3 5 + 10 
 
-x = 1.5 1 + = 2.5
-
-Eror de semantica en la linea 10: No podemos asignar un <Float> a un <Char>
+Variables:
+area, Float, 0
+radio, Float, 0
+pi, Float, 0
+resultado, Float, 0
+a, Int, 0
+d, Int, 0
+x, Char, 0
+Fin de compilacion

@@ -1,5 +1,5 @@
-﻿using System;
-
+﻿//Olvera Morales Miguel Angel
+using System;
 namespace Semantica
 {
     public class Program
