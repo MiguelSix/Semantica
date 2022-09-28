@@ -1,13 +1,6 @@
 Archivo: C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\prueba.cpp
-Fecha: 27/09/2022 9:54:55
-3 5 + 10 1 2 
+Fecha: 28/09/2022 9:29:05
 
-Variables:
-area, Float, 0
-radio, Float, 0
-pi, Float, 0
-resultado, Float, 0
-a, Int, 0
-d, Int, 0
-x, Char, 0
-Fin de compilacion
+x = area = 0
+
+Eror de semantica en la linea 11: No podemos asignar un <Float> a un <Char>

@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 * 4. Evaluar nuevamente la condicion del if, while, do while con respecto al parametro que reciben  
 *
 * 5. Levantar una excepcion en el scanf cuando la captura no sea un numero
+*
+* 6. Ejecutar el For
 * 
 */
 
@@ -368,18 +370,26 @@ namespace Semantica
             match("(");
             Asignacion(evaluacion);
             //Requerimiento 4
+            //Requerimiento 6:
+                //a) necesito guardar la posicion del archivo de texto en un int
+                
             bool validarFor = Condicion();
-            match(";");
-            Incremento(evaluacion);
-            match(")");
-            if (getContenido() == "{")
-            {
-                BloqueInstrucciones(evaluacion);  
-            }
-            else
-            {
-                Instruccion(evaluacion);
-            }
+            //b) usando un while despues del validarFor
+            //while(){
+                match(";");
+                Incremento(evaluacion);
+                match(")");
+                if (getContenido() == "{")
+                {
+                    BloqueInstrucciones(evaluacion);  
+                }
+                else
+                {
+                    Instruccion(evaluacion);
+                }
+                // c) Regresar a la posicion de lectura del archivo
+                // d) Sacar otro token
+            //}
         }
 
         //Incremento -> Identificador ++ | --
@@ -630,6 +640,11 @@ namespace Semantica
             if(!existeVariable(getContenido()))
             {
                 throw new Error("\nError de sintaxis en la linea: " + linea + ", la variable <"+ getContenido() + "> no existe", log);
+            }
+            //DOMINANTE
+            if(dominante < getTipo(getContenido()))
+            {
+                dominante = getTipo(getContenido());
             }
                 //Requerimiento 1
                 match(Tipos.Identificador);

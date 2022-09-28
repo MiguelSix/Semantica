@@ -7,6 +7,7 @@ int a, d;
 char x;
 // Este programa calcula el volumen de un cilindro.
 void main(){
+    x = area;
     if(3+5 > 10)
     {
         if(1 == 2)
