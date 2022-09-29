@@ -1,6 +1,20 @@
 Archivo: C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\prueba.cpp
-Fecha: 28/09/2022 9:29:05
+Fecha: 29/09/2022 9:40:52
 
-x = area = 0
+x = a = 0
 
-Eror de semantica en la linea 11: No podemos asignar un <Float> a un <Char>
+
+z = 20 = 20
+
+3 5 + 10 1 2 
+
+Variables:
+area, Float, 0
+radio, Float, 0
+pi, Float, 0
+resultado, Float, 0
+a, Int, 0
+d, Int, 0
+x, Char, 0
+z, Char, 20
+Fin de compilacion

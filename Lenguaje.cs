@@ -291,7 +291,6 @@ namespace Semantica
         //Asignacion -> identificador = cadena | Expresion;
         private void Asignacion(bool evaluacion)
         {
-            //Requerimiento 2.-
             if(!existeVariable(getContenido()))
             {
                 throw new Error("\nError de sintaxis en la linea: " + linea + ", la variable <"+ getContenido() + "> no existe", log);
@@ -302,23 +301,75 @@ namespace Semantica
             log.Write(nombreVariable + " = ");
             match(Tipos.Asignacion);
             dominante = Variable.TipoDato.Char;
-            Expresion();
-            match(";");
-            float resultado = stack.Pop();
-            log.WriteLine("= " + resultado);
-            log.WriteLine();
-            //Console.WriteLine(dominante);
-            //Console.WriteLine(evaluaNumero(resultado));
-            if(dominante < evaluaNumero(resultado))
+
+            if(getContenido() == "(")
             {
-                dominante = evaluaNumero(resultado);
-            }
-            if(dominante <= getTipo(nombreVariable))
-            {
-                if(evaluacion)
+                Variable.TipoDato casteo = Variable.TipoDato.Char;
+                bool huboCasteo = false;
+                match("(");
+                if(getClasificacion() == Tipos.TipoDato)
                 {
-                    modificaValor(nombreVariable, resultado);
-                } 
+                    //Requerimiento 2:
+                    huboCasteo = true;
+                    casteo = getTipo(getContenido());
+                    match(Tipos.TipoDato);
+                    match(")");
+                    match("(");
+                }
+                Expresion();
+                match(")");
+                match(";");
+                if(huboCasteo)
+                {
+                    //Requerimiento 2:
+                    dominante = casteo;
+                    Console.WriteLine("Se ha realizado un casteo");
+                    
+                    float resultado = stack.Pop();
+                    log.WriteLine("= " + resultado);
+                    log.WriteLine();
+                    //Console.WriteLine(dominante);
+                    //Console.WriteLine(evaluaNumero(resultado));
+                    if(dominante < evaluaNumero(resultado))
+                    {
+                        dominante = evaluaNumero(resultado);
+                    }
+                    if(dominante <= getTipo(nombreVariable))
+                    {
+                        if(evaluacion)
+                        {
+                            modificaValor(nombreVariable, resultado);
+                        } 
+                    }
+
+                    //Requerimiento 3:
+                    //Saco un elemento del stack
+                    //Convierto ese valor al equivalente en casteo
+                    //Ejemplo. Si el casteo es char y el pop regresa un 256,
+                    //         el valor equivalente en casteo es cero
+                    //Y meto ese valor al stcak
+                }
+            }
+            else if (getContenido() != "(")
+            {
+                Expresion();
+                match(";");
+                float resultado = stack.Pop();
+                log.WriteLine("= " + resultado);
+                log.WriteLine();
+                //Console.WriteLine(dominante);
+                //Console.WriteLine(evaluaNumero(resultado));
+                if(dominante < evaluaNumero(resultado))
+                {
+                    dominante = evaluaNumero(resultado);
+                }
+                if(dominante <= getTipo(nombreVariable))
+                {
+                    if(evaluacion)
+                    {
+                        modificaValor(nombreVariable, resultado);
+                    } 
+                }
             }
             else
             {
@@ -646,7 +697,6 @@ namespace Semantica
             {
                 dominante = getTipo(getContenido());
             }
-                //Requerimiento 1
                 match(Tipos.Identificador);
             }
             else
