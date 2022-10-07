@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 *
 * 2. Actualizar el dominante para el casteo y el valor de la subexpresion -------------------> Hecho
 *
-* 3. Programar un metodo de conversion de un valor a un tipo de dato
+* 3. Programar un metodo de conversion de un valor a un tipo de dato ----------------------> Hecho
 *       private float convert(float valor, string tipoDato)
 *       Deberan usar el residuo de la division %255, %65535  
 *
-* 4. Evaluar nuevamente la condicion del if, while, do while con respecto al parametro que reciben  
+* 4. Evaluar nuevamente la condicion del if, while, do while con respecto al parametro que reciben  ---------------> Hecho
 *
 * 5. Levantar una excepcion en el scanf cuando la captura no sea un numero  
 *
@@ -27,7 +27,6 @@ namespace Semantica
 
     public class Lenguaje: Sintaxis
     {
-
         List<Variable> variables = new List<Variable>();
         Stack<float> stack = new Stack<float>();
         Variable.TipoDato dominante;
@@ -43,7 +42,6 @@ namespace Semantica
         {
             //Eliminamos las comillas de la cadena
             cadena = cadena.Trim('"');
-            //Console.WriteLine(cadena);
             cadena = cadena.Replace("\\n", "\n");
             cadena = cadena.Replace("\\t", "\t");
             Console.Write(cadena);
@@ -74,7 +72,6 @@ namespace Semantica
             }
             return false;
         }
-        //Requerimiento 3:
         private void modificaValor(string nombre, float nuevoValor) 
         {
             foreach(Variable v in variables)
@@ -85,8 +82,6 @@ namespace Semantica
                 }
             }
         }
-
-        //Requerimiento 4:
         private float getValor(string nombreVariable)
         {
             foreach(Variable v in variables)
@@ -265,24 +260,6 @@ namespace Semantica
             return Variable.TipoDato.Float;
         }
 
-        //Funcion para convertir el valor del casteo
-        private float convierteValor(float valor, Variable.TipoDato tipo)
-        {
-            if(tipo == Variable.TipoDato.Char)
-            {
-                return (char)valor;
-            }
-            else if(tipo == Variable.TipoDato.Int)
-            {
-                return (int)valor;
-            }
-            else if(tipo == Variable.TipoDato.Float)
-            {
-                return (float)valor;
-            }
-            return valor;
-        }
-
         private bool evaluaSemantica(string nombreVariable, float resultado)
         {
             Variable.TipoDato tipoDato = getTipo(nombreVariable);
@@ -310,9 +287,6 @@ namespace Semantica
             float resultado = stack.Pop();
             log.WriteLine("= " + resultado);
             log.WriteLine();
-            //Console.WriteLine(dominante);
-            //Console.WriteLine(evaluaNumero(resultado));
-
             //Actualizamos dominantes
             if(dominante < evaluaNumero(resultado))
             {
@@ -340,20 +314,35 @@ namespace Semantica
             match("(");
             //Requerimiento 4, verificar que la condicion sea verdadera
             bool validarWhile = Condicion();
-
-            if(evaluacion)
+            if(evaluacion == false)
             {
-                
+                validarWhile = false;
             }
-
             match(")");
             if (getContenido() == "{") 
             {
-                BloqueInstrucciones(evaluacion);
+                //Validacion de la condicion
+                if(validarWhile)
+                {
+                    BloqueInstrucciones(evaluacion);
+                }
+                else
+                {
+                    BloqueInstrucciones(evaluacion = false);
+                }
+                
             }
             else
             {
-                Instruccion(evaluacion);
+                //Requerimiento 4
+                if(validarWhile)
+                {
+                    Instruccion(evaluacion);
+                }
+                else
+                {
+                    Instruccion(evaluacion = false);
+                }
             }
         }
 
@@ -373,6 +362,10 @@ namespace Semantica
             match("(");
             //Requerimiento 4
             bool validarDo = Condicion();
+            if(evaluacion == false)
+            {
+                validarDo = false;
+            }
             match(")");
             match(";");
         }
@@ -409,7 +402,7 @@ namespace Semantica
         //Incremento -> Identificador ++ | --
         private void Incremento(bool evaluacion)
         {
-            //Requerimiento 2.-
+            //Verificamos si la variable existe
             if(!existeVariable(getContenido()))
             {
                 throw new Error("\nError de sintaxis en la linea: " + linea + ", la variable <"+ getContenido() + "> no existe", log);
@@ -541,11 +534,11 @@ namespace Semantica
 
             if(getClasificacion() == Tipos.Cadena)
             {
-            //String aux = getContenido();
-            if(evaluacion){
-                secuenciasEscape(getContenido());
-            }
-            match(Tipos.Cadena);
+                if(evaluacion)
+                {
+                    secuenciasEscape(getContenido());
+                }
+                match(Tipos.Cadena);
             }
             else
             {
@@ -556,7 +549,7 @@ namespace Semantica
                 }
             }
             match(")");
-            match(Tipos.FinSentencia); //(";")
+            match(Tipos.FinSentencia);
         }
 
         //Scanf -> scanf(cadena  -> , -> & -> identificador);
@@ -567,12 +560,11 @@ namespace Semantica
             match(Tipos.Cadena);
             match(",");
             match("&");
-            //Requerimiento 2.-
+            //Verificamos si la variable existe
             if(!existeVariable(getContenido()))
             {
                 throw new Error("\nError de sintaxis en la linea: " + linea + ", la variable <"+ getContenido() + "> no existe", log);
             }
-
             if(evaluacion)
             {
                 string valor = "" + Console.ReadLine();
@@ -586,7 +578,7 @@ namespace Semantica
             match(";");
         }
 
-        //Main      -> void main() Bloque de instrucciones
+        //Main -> void main() Bloque de instrucciones
         private void Main()
         {
             match("void");
@@ -647,6 +639,7 @@ namespace Semantica
         //Factor -> numero | identificador | (Expresion)
         private void Factor()
         {
+            //Si es un numero
             if (getClasificacion() == Tipos.Numero)
             {
                 log.Write(getContenido() + " ");
@@ -657,23 +650,24 @@ namespace Semantica
                 stack.Push(float.Parse(getContenido()));
                 match(Tipos.Numero);
             }
+            //Si es una variable
             else if (getClasificacion() == Tipos.Identificador)
             {
                 log.Write(getContenido() + " ");
                 stack.Push(getValor(getContenido()));
-                //Requerimiento 2
+                //Verificamos si la variable existe
                 if(!existeVariable(getContenido()))
                 {
                     throw new Error("\nError de sintaxis en la linea: " + linea + ", la variable <"+ getContenido() + "> no existe", log);
                 }
-                //DOMINANTE
+                //Actualizamos el dominante
                 if(dominante < getTipo(getContenido()))
                 {
                     dominante = getTipo(getContenido());
                 }
-                //Requerimiento 1
                 match(Tipos.Identificador);
             }
+            //Si hay un casteo obtenemos el tipo de dato y verificamos la sintaxis
             else
             {
                 Variable.TipoDato casteo = Variable.TipoDato.Char;
@@ -681,7 +675,7 @@ namespace Semantica
                 match("(");
                 if(getClasificacion() == Tipos.TipoDato)
                 {
-                    //Requerimiento 2:
+                    //Requerimiento 2: Casteo y conversion de tipos
                     huboCasteo = true;
                     switch(getContenido())
                     {
@@ -689,25 +683,28 @@ namespace Semantica
                         case "int":  casteo = Variable.TipoDato.Int; break;
                         case "float": casteo = Variable.TipoDato.Float; break;
                     }
-                    //casteo = getTipo(getContenido());
                     match(Tipos.TipoDato);
                     match(")");
                     match("(");
                 }
                 Expresion();
                 match(")");
+                //Requerimiento 2: Si hay un casteo hay que convertir el valor
                 if(huboCasteo)
                 {
                     //Requerimiento 2: Casteo y conversion de tipos
+                    //Actualizamos el dominante al casteo realizado y obtenemos el valor del stack para convertirlo al adecuado
                     dominante = casteo;
                     float valor = stack.Pop();
+                    //Nombre de la variable para actualizar el valor
                     string nombre = getContenido();
-
+                    //Obtenemos el residuo acorde al tipo de dato
                     switch(casteo)
                     {
                         case Variable.TipoDato.Char: valor = valor%256; break;
                         case Variable.TipoDato.Int:  valor = valor%65536; break;
                     }
+                    //Modificamos el valor de la variable y la agregamos al stack
                     modificaValor(nombre, valor);
                     stack.Push(valor);
                 }

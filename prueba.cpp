@@ -8,7 +8,7 @@ char x;
 // Este programa calcula el volumen de un cilindro.
 void main(){
     area = 257;
-    x =(char)(area);
+    x =(char)(257);
     if(3+5 < 10)
     {
         printf("\nolaaa");
