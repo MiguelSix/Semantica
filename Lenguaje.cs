@@ -105,14 +105,12 @@ namespace Semantica
             return Variable.TipoDato.Char;
         }
         //Requerimiento 6, metodo para volver a otra posicion del archivo
-        //Se usa Position para posiciones absolutas y Seek para posiciones relativas
-        //Ambos setean la posicion en un valor x, pero Position descarta el buffer de lectura,
-        //a diferencia de Seek, que retiene el buffer de lectura
+        //Se usa Position y seek, para ambos hay que limpiar el buffer
         private void cambiarPosicion(int posicion)
         {
             //Limpiamos el buffer y actualizamos la posicion
             archivo.DiscardBufferedData();
-            archivo.BaseStream.Seek(posicion, System.IO.SeekOrigin.Begin);
+            archivo.BaseStream.Position = posicion;
         }
 
         //Programa  -> Librerias? Variables? Main

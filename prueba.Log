@@ -1,13 +1,55 @@
 Archivo: C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\prueba.cpp
-Fecha: 08/10/2022 17:56:51
+Fecha: 08/10/2022 18:57:42
 altura 2 
-altura i 0 
-0 j altura i - j 2 j altura i - j 2 i 0 
-0 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
-0 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
-0 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
-0 j altura i - j 2 1 1 2 2 
-256 a 
-a y 
+i = altura = 12
+
+i 0 
+j = 0 = 0
+
+j altura i - j 2 j altura i - j 2 i 0 
+j = 0 = 0
+
+j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+j = 0 = 0
+
+j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+j = 0 = 0
+
+j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+j = 0 = 0
+
+j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+j = 0 = 0
+
+j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+j = 0 = 0
+
+j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+j = 0 = 0
+
+j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+j = 0 = 0
+
+j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+j = 0 = 0
+
+j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+j = 0 = 0
+
+j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+j = 0 = 0
+
+j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+j = 0 = 0
+
+j altura i - j 2 1 1 2 2 
+a = 256 = 256
+
 a 
+y = a = 0
+
+y 
+y = a = 256
+
+
 Eror de semantica en la linea 42: No podemos asignar un <Int> a un <Char>
