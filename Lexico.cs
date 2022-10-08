@@ -289,10 +289,9 @@ public Lexico()
                 clasifica(estado);
                 if (estado >= 0)
                 {
-                    
-                    archivo.Read();
                     //Posicion en el archivo
                     i++;
+                    archivo.Read();
                     if(c == '\n')
                     {
                         linea++;

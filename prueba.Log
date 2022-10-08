@@ -1,7 +1,13 @@
 Archivo: C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\prueba.cpp
-Fecha: 08/10/2022 16:32:31
+Fecha: 08/10/2022 17:56:51
 altura 2 
-i = altura = 5
-
-i 0 
-Error de sintaxis, se espera un ( en linea: 15
+altura i 0 
+0 j altura i - j 2 j altura i - j 2 i 0 
+0 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+0 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+0 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
+0 j altura i - j 2 1 1 2 2 
+256 a 
+a y 
+a 
+Eror de semantica en la linea 42: No podemos asignar un <Int> a un <Char>

@@ -16,9 +16,9 @@ using System.Threading.Tasks;
 *
 * 4. Evaluar nuevamente la condicion del if, while, do while con respecto al parametro que reciben  ---------------> Hecho
 *
-* 5. Levantar una excepcion en el scanf cuando la captura no sea un numero  
+* 5. Levantar una excepcion en el scanf cuando la captura no sea un numero ----------------------> Hecho 
 *
-* 6. Ejecutar el for
+* 6. Ejecutar el for con respecto a los parametros que recibe ----------------------> Hecho
 */
 
 
@@ -110,10 +110,10 @@ namespace Semantica
         //a diferencia de Seek, que retiene el buffer de lectura
         private void cambiarPosicion(int posicion)
         {
-            //archivo.DiscardBufferedData();
+            //Limpiamos el buffer y actualizamos la posicion
+            archivo.DiscardBufferedData();
             archivo.BaseStream.Seek(posicion, System.IO.SeekOrigin.Begin);
         }
-
 
         //Programa  -> Librerias? Variables? Main
         public void Programa()
@@ -151,11 +151,9 @@ namespace Semantica
                 Variable.TipoDato tipo = Variable.TipoDato.Char;
                 switch(getContenido())
                 {
-                    case "int": tipo = Variable.TipoDato.Int; break;
-
-                    case "float": tipo = Variable.TipoDato.Float; break;
-
-                    default: tipo = Variable.TipoDato.Char; break;
+                    case "int": tipo    = Variable.TipoDato.Int;    break;
+                    case "float": tipo  = Variable.TipoDato.Float;  break;
+                    default: tipo       = Variable.TipoDato.Char;   break;
                 }
 
                 match(Tipos.TipoDato);
@@ -272,7 +270,6 @@ namespace Semantica
         private bool evaluaSemantica(string nombreVariable, float resultado)
         {
             Variable.TipoDato tipoDato = getTipo(nombreVariable);
-
             return false;
         }
 
@@ -339,7 +336,6 @@ namespace Semantica
                 {
                     BloqueInstrucciones(evaluacion = false);
                 }
-                
             }
             else
             {
@@ -385,14 +381,18 @@ namespace Semantica
             match("(");
             Asignacion(evaluacion);
             //Requerimiento 4, verificar que la condicion sea verdadera
-            bool validarFor = Condicion();
+            bool validarFor = true;
             //Requerimiento 6, a) guardar la direccion de la posicion del archivo de texto
             int posicionFor = i - getContenido().Length;
             int lineaFor = linea;
-            //b) Metemos un ciclo (do-while) pero despues validar el for
-            do
+            //b) Metemos un ciclo (while) pero despues validar el for
+            while(validarFor)
             {
                 validarFor = Condicion();
+                if(evaluacion == false)
+                {
+                    validarFor = false;
+                }
                 match(";");
                 Incremento(validarFor);
                 match(")");
@@ -413,7 +413,7 @@ namespace Semantica
                     //Requerimiento 6, d) sacar otro token
                     NextToken();
                 }
-            }while(validarFor);
+            }
         }
 
         //Incremento -> Identificador ++ | --
@@ -442,7 +442,6 @@ namespace Semantica
                 }
                 match("--");
             }
-            //match(";");
         }
 
         //Switch -> switch (Expresion) {Lista de casos} | (default: )
@@ -520,6 +519,10 @@ namespace Semantica
             match("if");
             match("(");
             bool validarIf = Condicion();
+            if (!evaluacion)
+            {
+                validarIf = false;
+            }
             match(")");
             if (getContenido() == "{")
             {
@@ -564,7 +567,6 @@ namespace Semantica
         {
             match("printf");
             match("(");
-
             if(getClasificacion() == Tipos.Cadena)
             {
                 if(evaluacion)
@@ -720,9 +722,9 @@ namespace Semantica
                     huboCasteo = true;
                     switch(getContenido())
                     {
-                        case "char": casteo = Variable.TipoDato.Char; break;
-                        case "int":  casteo = Variable.TipoDato.Int; break;
-                        case "float": casteo = Variable.TipoDato.Float; break;
+                        case "char": casteo     = Variable.TipoDato.Char;   break;
+                        case "int":     casteo  = Variable.TipoDato.Int;    break;
+                        case "float": casteo    = Variable.TipoDato.Float;  break;
                     }
                     match(Tipos.TipoDato);
                     match(")");
@@ -742,8 +744,9 @@ namespace Semantica
                     //Obtenemos el residuo acorde al tipo de dato
                     switch(casteo)
                     {
-                        case Variable.TipoDato.Char: valor = valor%256; break;
-                        case Variable.TipoDato.Int:  valor = valor%65536; break;
+                        case Variable.TipoDato.Int:  valor = valor % 65536; break;
+                        case Variable.TipoDato.Char: valor = valor % 256;   break;
+                        //Como trabajamos originalmente con variables tipo float, no hay que hacer nada
                     }
                     //Modificamos el valor de la variable y la agregamos al stack
                     modificaValor(nombre, valor);
