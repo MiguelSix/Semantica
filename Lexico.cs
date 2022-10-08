@@ -7,11 +7,13 @@ namespace Semantica
 {
     public class Lexico: Token
     {
-     StreamReader archivo;
+        protected StreamReader archivo;
         protected StreamWriter log;
         const int F = -1;
         const int E = -2;
         protected int linea;
+        //Posicion del archivo
+        protected int i = 0;
         int[,] TRAND = new int[,]
         {
             //WS,EF,EL,L, D, .,	E, +, -, =,	:, ;, &, |,	!, >, <, *,	%, /, ", ?,La, ', #
@@ -287,7 +289,10 @@ public Lexico()
                 clasifica(estado);
                 if (estado >= 0)
                 {
+                    
                     archivo.Read();
+                    //Posicion en el archivo
+                    i++;
                     if(c == '\n')
                     {
                         linea++;

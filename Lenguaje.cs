@@ -104,6 +104,16 @@ namespace Semantica
             }
             return Variable.TipoDato.Char;
         }
+        //Requerimiento 6, metodo para volver a otra posicion del archivo
+        //Se usa Position para posiciones absolutas y Seek para posiciones relativas
+        //Ambos setean la posicion en un valor x, pero Position descarta el buffer de lectura,
+        //a diferencia de Seek, que retiene el buffer de lectura
+        private void cambiarPosicion(int posicion)
+        {
+            //archivo.DiscardBufferedData();
+            archivo.BaseStream.Seek(posicion, System.IO.SeekOrigin.Begin);
+        }
+
 
         //Programa  -> Librerias? Variables? Main
         public void Programa()
@@ -375,27 +385,35 @@ namespace Semantica
             match("(");
             Asignacion(evaluacion);
             //Requerimiento 4, verificar que la condicion sea verdadera
-            //Requerimiento 6, a) guardar la direccion de la posicion del archivo de texto
             bool validarFor = Condicion();
-
-            //b) Metemos un ciclo (while) pero despues validar el for
-
-            //while()
-            //{
-            match(";");
-            Incremento(evaluacion);
-            match(")");
-            if (getContenido() == "{")
+            //Requerimiento 6, a) guardar la direccion de la posicion del archivo de texto
+            int posicionFor = i - getContenido().Length;
+            int lineaFor = linea;
+            //b) Metemos un ciclo (do-while) pero despues validar el for
+            do
             {
-                BloqueInstrucciones(evaluacion);  
-            }
-            else
-            {
-                Instruccion(evaluacion);
-            }
-            //c) Regresar a la posicion de lectura del archivo
-            //d) Sacar otro token
-            //}
+                validarFor = Condicion();
+                match(";");
+                Incremento(validarFor);
+                match(")");
+                if (getContenido() == "{")
+                {
+                BloqueInstrucciones(validarFor);  
+                }
+                else
+                {
+                    Instruccion(validarFor);
+                }
+                if(validarFor)
+                {
+                    //Requerimiento 6, c) regresar a la direccion de la posicion del archivo de texto
+                    i = posicionFor;
+                    linea = lineaFor;
+                    cambiarPosicion(i);
+                    //Requerimiento 6, d) sacar otro token
+                    NextToken();
+                }
+            }while(validarFor);
         }
 
         //Incremento -> Identificador ++ | --
@@ -502,11 +520,6 @@ namespace Semantica
             match("if");
             match("(");
             bool validarIf = Condicion();
-            //Requerimiento 4, validar la condicion
-            if(evaluacion == false)
-            {
-                validarIf = false;
-            }
             match(")");
             if (getContenido() == "{")
             {
@@ -682,7 +695,6 @@ namespace Semantica
             else if (getClasificacion() == Tipos.Identificador)
             {
                 log.Write(getContenido() + " ");
-                stack.Push(getValor(getContenido()));
                 //Verificamos si la variable existe
                 if(!existeVariable(getContenido()))
                 {
@@ -693,6 +705,7 @@ namespace Semantica
                 {
                     dominante = getTipo(getContenido());
                 }
+                stack.Push(getValor(getContenido()));
                 match(Tipos.Identificador);
             }
             //Si hay un casteo obtenemos el tipo de dato y verificamos la sintaxis

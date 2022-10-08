@@ -14,7 +14,7 @@ namespace Semantica
             Console.WriteLine(mensaje);
             log.WriteLine();
             */
-            log.WriteLine(mensaje);
+            log.WriteLine("\n" + mensaje);
         }
     }
 }
