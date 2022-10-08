@@ -24,7 +24,6 @@ using System.Threading.Tasks;
 
 namespace Semantica
 {
-
     public class Lenguaje: Sintaxis
     {
         List<Variable> variables = new List<Variable>();
@@ -503,6 +502,11 @@ namespace Semantica
             match("if");
             match("(");
             bool validarIf = Condicion();
+            //Requerimiento 4, validar la condicion
+            if(evaluacion == false)
+            {
+                validarIf = false;
+            }
             match(")");
             if (getContenido() == "{")
             {
@@ -515,13 +519,29 @@ namespace Semantica
             if (getContenido() == "else")
             {
                 match("else");
+                //Requerimiento 4, validar condicion en el else
                 if (getContenido() == "{")
                 {
-                    BloqueInstrucciones(validarIf);
+                    if(evaluacion)
+                    {
+                        BloqueInstrucciones(!validarIf);
+                    }
+                    else
+                    {
+                        BloqueInstrucciones(evaluacion = false);
+                    }
                 }
                 else
                 {
-                    Instruccion(validarIf);
+                    //Requerimiento 4
+                    if(evaluacion)
+                    {
+                        Instruccion(!validarIf);
+                    }
+                    else
+                    {
+                        Instruccion(evaluacion = false);
+                    }
                 }
             }
         }
@@ -568,10 +588,18 @@ namespace Semantica
             if(evaluacion)
             {
                 string valor = "" + Console.ReadLine();
+                float valorNumerico;
                 //Requerimiento 5
                 //El readLine debe capturar un numero, pero si el usuario ingresa una cadena debemos levantar una excepcion
                 //si el valor es un numero, modifica el valor, sino levantamos una excepcion de que no es un numero
-                modificaValor(getContenido(), float.Parse(valor));
+                if(float.TryParse(valor, out valorNumerico))
+                {
+                    modificaValor(getContenido(), valorNumerico);
+                }
+                else
+                {
+                    throw new Error("\nError de sintaxis en la linea: " + linea + ", el valor ingresado no es un numero", log);
+                }
             }
             match(Tipos.Identificador);
             match(")");
