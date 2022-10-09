@@ -1,7 +1,7 @@
 Archivo: C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\prueba.cpp
-Fecha: 08/10/2022 18:57:42
+Fecha: 08/10/2022 19:11:51
 altura 2 
-i = altura = 12
+i = altura = 3
 
 i 0 
 j = 0 = 0
@@ -15,33 +15,6 @@ j = 0 = 0
 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
 j = 0 = 0
 
-j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
-j = 0 = 0
-
-j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
-j = 0 = 0
-
-j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
-j = 0 = 0
-
-j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
-j = 0 = 0
-
-j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
-j = 0 = 0
-
-j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
-j = 0 = 0
-
-j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
-j = 0 = 0
-
-j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
-j = 0 = 0
-
-j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 j altura i - j 2 i 0 
-j = 0 = 0
-
 j altura i - j 2 1 1 2 2 
 a = 256 = 256
 
@@ -49,7 +22,10 @@ a
 y = a = 0
 
 y 
+i = 0 = 0
+
+i 10 i i 10 i i 10 i i 10 i i 10 i i 10 i i 10 i i 10 i i 10 i i 10 i i 10 i 
 y = a = 256
 
 
-Eror de semantica en la linea 42: No podemos asignar un <Int> a un <Char>
+Eror de semantica en la linea 171: No podemos asignar un <Int> a un <Char>
