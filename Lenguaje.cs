@@ -382,6 +382,7 @@ namespace Semantica
             bool validarFor = true;
             //Requerimiento 6, a) guardar la direccion de la posicion del archivo de texto
             int posicionFor = i - getContenido().Length;
+            int lineaFor = linea;
             //b) Metemos un ciclo (while) para despues validar el for
             while(validarFor)
             {
@@ -405,6 +406,7 @@ namespace Semantica
                 {
                     //Requerimiento 6, c) regresar a la direccion de la posicion del archivo de texto
                     i = posicionFor;
+                    linea = lineaFor;
                     cambiarPosicion(i);
                     //Requerimiento 6, d) sacar otro token
                     NextToken();
