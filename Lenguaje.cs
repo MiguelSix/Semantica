@@ -113,6 +113,36 @@ namespace Semantica
             archivo.BaseStream.Position = posicion;
         }
 
+        private float incrementoFor(bool evaluacion)
+        {
+            string variable = getContenido();
+            //Verificamos si la variable existe
+            if (existeVariable(variable) == false)
+            {
+                throw new Error("\nError de sintaxis en la linea: " + linea + ", la variable <"+ getContenido() + "> no existe", log);
+            }
+            match(Tipos.Identificador);
+            if(getContenido() == "++")
+            {
+                match("++");
+                if(evaluacion)
+                {
+                    //Si es un ++, aumentamos el valor en 1
+                    return getValor(variable) + 1;
+                }
+            }
+            else
+            {
+                match("--");
+                //Si es un --, restamos el valor en 1
+                if(evaluacion)
+                {
+                    return getValor(variable) - 1;
+                }
+            }
+            return 0;
+        }
+
         //Programa  -> Librerias? Variables? Main
         public void Programa()
         {
@@ -372,6 +402,7 @@ namespace Semantica
             match(")");
             match(";");
         }
+
         //For -> for(Asignacion Condicion; Incremento) BloqueInstruccones | Intruccion 
         private void For(bool evaluacion)
         {
@@ -392,7 +423,12 @@ namespace Semantica
                     validarFor = false;
                 }
                 match(";");
-                Incremento(validarFor);
+
+                //Aqui se arregla un mal incremento dentro del for
+                string nombreIncremento = getContenido();
+                float valorIncremento = incrementoFor(validarFor);
+                //Incremento(validarFor);
+                //Console.WriteLine("Valor de la variable: " + temp + " = " + getValor(temp));
                 match(")");
                 if (getContenido() == "{")
                 {
@@ -410,6 +446,8 @@ namespace Semantica
                     cambiarPosicion(i);
                     //Requerimiento 6, d) sacar otro token
                     NextToken();
+                    //Actualizamos el valor del contador del for
+                    modificaValor(nombreIncremento, valorIncremento);
                 }
             }
         }

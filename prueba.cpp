@@ -10,6 +10,7 @@ void main(){
     //Requerimiento 5.- Levanta una excepcion en el scanf si la captura no es un numero
     printf("Introduce la altura de la piramide: ");
     scanf("altura", &altura);
+
     //Requerimiento 6.- Ejecutar el for y for anidado
     if(altura >2)
         for(i = altura; i > 0; i--)
@@ -38,6 +39,20 @@ void main(){
     y = (char)(a);  //Requerimiento 2 y 3, actualiza el dominante y convierte el valor con una funcion
     printf("\nValor de variable char y despues del casteo de a: ");
     printf(y);
+
+    for(j = 0; j < altura-1; j++){
+        if(j!=2){
+            printf("*");
+        }
+        else{
+            printf("-");//Requerimiento 4.- evalua nuevamente los else
+        }
+    }
+    for(i = 0; i < altura; i++)
+    {
+        printf("\n");
+        printf(i);   
+    }
     printf("\nA continuacion se intenta asignar un int a un char sin usar casteo: \n");
     y = a; //Requerimiento 1.- debe marcar error
 }
