@@ -16,7 +16,7 @@ void main(){
         for(i = altura; i > 0; i--)
         {
             for(j = 0; j < altura-i; j++){
-                if(j!=2){
+                if(j!=1){
                     printf("*");
                 }
                 else{
@@ -39,19 +39,9 @@ void main(){
     y = (char)(a);  //Requerimiento 2 y 3, actualiza el dominante y convierte el valor con una funcion
     printf("\nValor de variable char y despues del casteo de a: ");
     printf(y);
-
-    for(j = 0; j < altura-1; j++){
-        if(j!=2){
-            printf("*");
-        }
-        else{
-            printf("-");//Requerimiento 4.- evalua nuevamente los else
-        }
-    }
-    for(i = 0; i < altura; i++)
-    {
-        printf("\n");
-        printf(i);   
+    for(i = 0; i < 10; i++){
+        printf("\nValor de i: ");
+        printf(i);
     }
     printf("\nA continuacion se intenta asignar un int a un char sin usar casteo: \n");
     y = a; //Requerimiento 1.- debe marcar error
