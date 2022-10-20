@@ -11,18 +11,11 @@ namespace Semantica
                 Lenguaje a = new Lenguaje("C:\\Users\\wachi\\OneDrive\\Escritorio\\AUTOMATAS\\Semantica\\prueba.cpp");
 
                 a.Programa();
-                
-                /*while(!a.FinArchivo())
-                {
-                    a.NextToken();
-                }*/
                 a.cerrar();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                //Console.WriteLine("Fin de compilacion");
-                //Console.WriteLine("Error de compilacion");
             }
         }
     }

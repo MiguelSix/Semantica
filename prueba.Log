@@ -1,37 +1,20 @@
 Archivo: C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\prueba.cpp
-Fecha: 10/10/2022 20:52:42
-altura 2 
-i = altura = 5
+Fecha: 20/10/2022 9:57:35
 
-i 0 
-j = 0 = 0
-
-j altura i - j 1 i 0 
-j = 0 = 0
-
-j altura i - j 1 j altura i - j 1 i 0 
-j = 0 = 0
-
-j altura i - j 1 j altura i - j 1 j altura i - j 1 i 0 
-j = 0 = 0
-
-j altura i - j 1 j altura i - j 1 j altura i - j 1 j altura i - j 1 i 0 
-j = 0 = 0
-
-j altura i - j 1 j altura i - j 1 j altura i - j 1 j altura i - j 1 j altura i - j 1 i 0 
-j = 0 = 0
-
-j altura i - j 1 1 1 2 2 
-a = 256 = 256
-
-a 
-y = a = 0
-
-y 
-i = 0 = 0
-
-i 10 i i 10 i i 10 i i 10 i i 10 i i 10 i i 10 i i 10 i i 10 i i 10 i i 10 i 
-y = a = 256
+y = 3 5 + 8 * 10 4 - 2 / - = 61
 
 
-Eror de semantica en la linea 47: No podemos asignar un <Int> a un <Char>
+
+Variables:
+area, Float, 0
+radio, Float, 0
+pi, Float, 0
+resultado, Float, 0
+x, Float, 0
+a, Int, 0
+d, Int, 0
+altura, Int, 0
+i, Int, 0
+j, Int, 0
+y, Char, 61
+Fin de compilacion
