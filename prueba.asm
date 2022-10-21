@@ -1,40 +1,53 @@
 ;Archivo: C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\prueba.cpp
-;Fecha: 20/10/2022 9:57:35
+;Fecha: 21/10/2022 9:55:07
 #make_COM#
 include 'emu8086.inc'
 ORG 1000h
-MOVE AX, 3
+;Variables:
+	area DB ?
+	radio DB ?
+	pi DB ?
+	resultado DB ?
+	x DB ?
+	a DB ?
+	d DB ?
+	altura DB ?
+	i DB ?
+	j DB ?
+	y DB ?
+MOV AX, 3
 PUSH AX
-MOVE AX, 5
+MOV AX, 5
 PUSH AX
-POP AX
 POP BX
+POP AX
 ADD AX, BX
 PUSH AX
-MOVE AX, 8
+MOV AX, 8
 PUSH AX
-POP AX
 POP BX
+POP AX
 MUL BX
 PUSH AX
-MOVE AX, 10
+MOV AX, 10
 PUSH AX
-MOVE AX, 4
+MOV AX, 4
 PUSH AX
-POP AX
 POP BX
+POP AX
 SUB AX, BX
 PUSH AX
-MOVE AX, 2
+MOV AX, 2
 PUSH AX
-POP AX
 POP BX
+POP AX
 DIV BX
 PUSH AX
-POP AX
 POP BX
+POP AX
 SUB AX, BX
 PUSH AX
 POP AX
+MOV y, AX
 RET
 END
