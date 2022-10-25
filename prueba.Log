@@ -1,7 +1,10 @@
 Archivo: C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\prueba.cpp
-Fecha: 21/10/2022 9:55:06
+Fecha: 25/10/2022 9:49:53
 
-y = 3 5 + 8 * 10 4 - 2 / - = 61
+y = 61 = 61
+
+61 61 
+x = 10 = 10
 
 
 
@@ -10,11 +13,12 @@ area, Float, 0
 radio, Float, 0
 pi, Float, 0
 resultado, Float, 0
-x, Float, 0
+x, Float, 10
 a, Int, 0
 d, Int, 0
 altura, Int, 0
 i, Int, 0
 j, Int, 0
 y, Char, 61
+z, Char, 0
 Fin de compilacion
