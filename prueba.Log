@@ -1,6 +1,18 @@
-Archivo: C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\prueba.cpp
-Fecha: 31/10/2022 9:59:16
-10 
+Archivo: prueba.cpp
+Fecha: 07/11/2022 9:45:16
+
+0 = 0
+
+i 10 
+2 i 10 
+2 i 10 
+2 i 10 
+2 i 10 
+2 i 10 
+2 
+0 = 0
+
+j 10 j j 10 j j 10 j j 10 j j 10 j j 10 j j 10 j j 10 j j 10 j j 10 j j 10 j 
 
 Variables:
 area, Float, 0
@@ -11,8 +23,8 @@ x, Float, 0
 a, Int, 0
 d, Int, 0
 altura, Int, 0
-i, Int, 0
-j, Int, 0
+i, Int, 12
+j, Int, 11
 y, Int, 0
 z, Char, 0
 Fin de compilacion

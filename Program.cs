@@ -7,11 +7,14 @@ namespace Semantica
         static void Main(string[] args)
         {
             try
-            {  
-                Lenguaje a = new Lenguaje("C:\\Users\\wachi\\OneDrive\\Escritorio\\AUTOMATAS\\Semantica\\prueba.cpp");
-
-                a.Programa();
-                a.cerrar();
+            {
+                using (Lenguaje lenguaje = new Lenguaje())
+                {
+                    lenguaje.Programa();
+                }
+                //Lenguaje a = new Lenguaje("C:\\Users\\wachi\\OneDrive\\Escritorio\\AUTOMATAS\\Semantica\\prueba.cpp");
+                //a.Programa();
+                //a.cerrar();
             }
             catch (Exception e)
             {
