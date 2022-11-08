@@ -1,5 +1,5 @@
 ;Archivo: prueba.asm
-;Fecha: 07/11/2022 23:10:00
+;Fecha: 07/11/2022 23:52:55
 #make_COM#
 include 'emu8086.inc'
 ORG 100h
@@ -19,6 +19,21 @@ ORG 100h
 PRINTN ""
 PRINTN "Holaaa"
 PRINT "coco"
+MOV AX, 10
+PUSH AX
+POP AX
+MOV a, AX
+MOV AX, 2
+PUSH AX
+MOV AX, a
+DIV BX
+MOV a, AX
+PRINTN ""
+PRINT ""
+MOV AX, a
+PUSH AX
+POP AX
+CALL PRINT_NUM
 MOV AX, 4C00H
 INT 21H
 RET

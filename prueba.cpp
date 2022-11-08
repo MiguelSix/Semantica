@@ -10,6 +10,10 @@ void main()
 {
 
     printf("\nHolaaa\ncoco");
+    a = 10;
+    a/=2;
+    printf("\n");
+    printf(a);
 
 /*
     for (j = 0; j < 10; j += 2)

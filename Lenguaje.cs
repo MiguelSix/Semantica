@@ -670,15 +670,21 @@ namespace Semantica
                     }
                     break;
                 case "*=":
-                    match(Tipos.IncrementoTermino);
+                    match("*=");
                     Expresion(evaluacionASM);
                     valor = stack.Pop();
                     if (evaluacionASM)
                     {
                         if(tipo == "for")
-                            forASM  = forASM + "MUL " + nombreVariable + ", " + valor + "\n";
+                        {
+                            forASM  = forASM + "MUL " + nombreVariable + "\n";
+                            forASM  = forASM + "MOV " + nombreVariable + ", AX" + "\n";
+                        }
                         else
-                            asm.WriteLine("MUL " + nombreVariable + ", " + valor);
+                        {
+                            asm.WriteLine("MUL " + nombreVariable);
+                            asm.WriteLine("MOV " + nombreVariable + ", AX");
+                        }
                     }
                     if (dominante < evaluaNumero(valor))
                     {
@@ -697,15 +703,21 @@ namespace Semantica
                     }
                     break;
                 case "/=":
-                    match(Tipos.IncrementoTermino);
+                    match("/=");
                     Expresion(evaluacionASM);
                     valor = stack.Pop();
                     if (evaluacionASM)
                     {
                         if(tipo == "for")
-                            forASM  = forASM + "DIV " + nombreVariable + ", " + valor + "\n";
+                        {
+                            forASM  = forASM + "DIV " + nombreVariable + "\n";
+                            forASM  = forASM + "MOV " + nombreVariable + ", AX" + "\n";
+                        }
                         else
-                            asm.WriteLine("DIV " + nombreVariable + ", " + valor);
+                        {
+                            asm.WriteLine("DIV " + nombreVariable);
+                            asm.WriteLine("MOV " + nombreVariable + ", AX");
+                        }
                     }
                     if (dominante < evaluaNumero(valor))
                     {
@@ -724,7 +736,7 @@ namespace Semantica
                     }
                     break;
                 case "%=":
-                    match(Tipos.IncrementoTermino);
+                    match("%=");
                     Expresion(evaluacionASM);
                     valor = stack.Pop();
                     if (evaluacionASM)
