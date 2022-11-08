@@ -57,7 +57,7 @@ namespace Semantica
             Console.WriteLine("\n\nDestructor ejecutado exitosamente");
             cerrar();
         }
-        private void secuenciasEscape(string cadena)
+        private void secuenciasEscape(string cadena, bool evaluacionASM)
         {
             cadena = cadena.Trim('"');
             string aux = cadena;
@@ -65,20 +65,23 @@ namespace Semantica
             cadena = cadena.Replace("\\t", "\t");
 
             //Split para separar los saltos de linea
-            string [] subCadenas = aux.Split("\\n");
+            string[] subCadenas = aux.Split("\\n");
             int i = 0;
             int tam = subCadenas.Length - 1;
-            foreach (string cad in subCadenas) 
-            {  
-                if(i == tam)
+            if (evaluacionASM)
+            {
+                foreach (string cad in subCadenas)
                 {
-                    asm.WriteLine("PRINT \"" + cad + "\"");
+                    if (i == tam)
+                    {
+                        asm.WriteLine("PRINT \"" + cad + "\"");
+                    }
+                    else
+                    {
+                        asm.WriteLine("PRINTN \"" + cad + "\"");
+                    }
+                    i++;
                 }
-                else
-                {
-                    asm.WriteLine("PRINTN \"" + cad + "\"");
-                }
-                i++;
             }
             /*
             if(cadena.Contains("\n"))
@@ -406,12 +409,8 @@ namespace Semantica
         //While -> while(Condicion) bloque de instrucciones | instruccion
         private void While(bool evaluacion, bool evaluacionASM)
         {
-            if (evaluacionASM)
-            {
-                contadorWhile++;
-            }
             string etiquetaInicioWhile = "inicioWhile" + contadorWhile;
-            string etiquetaFinWhile = "finWhile" + contadorWhile;
+            string etiquetaFinWhile = "finWhile" + contadorWhile++;
             match("while");
             match("(");
             //Verificar que la condicion sea verdadera
@@ -428,7 +427,7 @@ namespace Semantica
                 validarWhile = Condicion(etiquetaFinWhile, evaluacionASM);
                 if (!evaluacion)
                 {
-                    validarWhile = evaluacion;
+                    validarWhile = false;
                 }
                 match(")");
                 if (getContenido() == "{")
@@ -576,10 +575,10 @@ namespace Semantica
                 case "++":
                     if (evaluacionASM)
                     {
-                        if(tipo == "for")
-                            forASM  = forASM + "INC " + nombreVariable + "\n";
+                        if (tipo == "for")
+                            forASM = forASM + "INC " + nombreVariable + "\n";
                         else
-                        asm.WriteLine("INC " + nombreVariable);
+                            asm.WriteLine("INC " + nombreVariable);
                     }
                     if (evaluacion)
                     {
@@ -605,7 +604,7 @@ namespace Semantica
                 case "--":
                     if (evaluacionASM)
                     {
-                        if(tipo == "for")
+                        if (tipo == "for")
                             forASM = forASM + "DEC " + nombreVariable + "\n";
                         else
                             asm.WriteLine("DEC " + nombreVariable);
@@ -620,10 +619,11 @@ namespace Semantica
                     match(Tipos.IncrementoTermino);
                     Expresion(evaluacionASM);
                     valor = stack.Pop();
+                    //asm.WriteLine("POP AX");
                     if (evaluacionASM)
                     {
-                        if(tipo == "for")
-                            forASM  = forASM + "ADD " + nombreVariable + ", " + valor + "\n";
+                        if (tipo == "for")
+                            forASM = forASM + "ADD " + nombreVariable + ", " + valor + "\n";
                         else
                             asm.WriteLine("ADD " + nombreVariable + ", " + valor);
                     }
@@ -647,10 +647,11 @@ namespace Semantica
                     match(Tipos.IncrementoTermino);
                     Expresion(evaluacionASM);
                     valor = stack.Pop();
+                    //asm.WriteLine("POP AX");
                     if (evaluacionASM)
                     {
-                        if(tipo == "for")
-                            forASM  = forASM + "SUB " + nombreVariable + ", " + valor + "\n";
+                        if (tipo == "for")
+                            forASM = forASM + "SUB " + nombreVariable + ", " + valor + "\n";
                         else
                             asm.WriteLine("SUB " + nombreVariable + ", " + valor);
                     }
@@ -674,12 +675,13 @@ namespace Semantica
                     match("*=");
                     Expresion(evaluacionASM);
                     valor = stack.Pop();
+                    //asm.WriteLine("POP AX");
                     if (evaluacionASM)
                     {
-                        if(tipo == "for")
+                        if (tipo == "for")
                         {
-                            forASM  = forASM + "MUL " + nombreVariable + "\n";
-                            forASM  = forASM + "MOV " + nombreVariable + ", AX" + "\n";
+                            forASM = forASM + "MUL " + nombreVariable + "\n";
+                            forASM = forASM + "MOV " + nombreVariable + ", AX" + "\n";
                         }
                         else
                         {
@@ -707,19 +709,20 @@ namespace Semantica
                     match("/=");
                     Expresion(evaluacionASM);
                     valor = stack.Pop();
+                    //asm.WriteLine("POP AX");
                     if (evaluacionASM)
                     {
-                        if(tipo == "for")
+                        if (tipo == "for")
                         {
-                            forASM  = forASM + "MOV BX, AX" + "\n";
-                            forASM  = forASM + "MOV AX, " + nombreVariable + "\n";
-                            forASM  = forASM + "DIV BX" + "\n";
-                            forASM  = forASM + "MOV " + nombreVariable + ", AX" + "\n";
+                            forASM = forASM + "MOV AX, " + nombreVariable + "\n";
+                            forASM = forASM + "MOV BX, " + valor + "\n";
+                            forASM = forASM + "DIV BX" + "\n";
+                            forASM = forASM + "MOV " + nombreVariable + ", AX" + "\n";
                         }
                         else
                         {
-                            asm.WriteLine("MOV BX, AX");
                             asm.WriteLine("MOV AX," + nombreVariable);
+                            asm.WriteLine("MOV BX, " + valor);
                             asm.WriteLine("DIV BX");
                             asm.WriteLine("MOV " + nombreVariable + ", AX");
                         }
@@ -744,19 +747,21 @@ namespace Semantica
                     match("%=");
                     Expresion(evaluacionASM);
                     valor = stack.Pop();
+                    //asm.WriteLine("POP AX");
                     if (evaluacionASM)
                     {
-                        if(tipo == "for"){
-                            forASM  = forASM + "MOV BX, AX" + "\n";
-                            forASM  = forASM + "MOV AX, " + nombreVariable + "\n";
-                            forASM  = forASM + "DIV BX" + "\n";
-                            forASM  = forASM + "MOV " + nombreVariable + ", DX" + "\n";
+                        if (tipo == "for")
+                        {
+                            forASM = forASM + "MOV AX, " + nombreVariable + "\n";
+                            forASM = forASM + "MOV CX, " + valor + "\n";
+                            forASM = forASM + "DIV CX" + "\n";
+                            forASM = forASM + "MOV " + nombreVariable + ", DX" + "\n";
                         }
                         else
                         {
-                            asm.WriteLine("MOV BX, AX");
                             asm.WriteLine("MOV AX," + nombreVariable);
-                            asm.WriteLine("DIV BX");
+                            asm.WriteLine("MOV CX, " + valor);
+                            asm.WriteLine("DIV CX");
                             asm.WriteLine("MOV " + nombreVariable + ", DX");
                         }
                     }
@@ -962,7 +967,7 @@ namespace Semantica
             {
                 if (evaluacion)
                 {
-                    secuenciasEscape(getContenido());
+                    secuenciasEscape(getContenido(), evaluacionASM);
                 }
                 match(Tipos.Cadena);
             }
