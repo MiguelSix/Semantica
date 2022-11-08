@@ -74,9 +74,9 @@ namespace Semantica
                 asm.WriteLine("PRINT " + "\"" + cadena + "\"");
             }
             */
-            aux = aux.Replace("\\n", "\' \'");
-            aux = aux.Replace("\\t", "   ");
-            asm.WriteLine("PRINT " + "\"" + aux + "\"");
+            aux = aux.Replace("\\n", "");
+            aux = aux.Replace("\\t", "");
+            asm.WriteLine("PRINTN " + "\"" + aux + "\"");
             Console.Write(cadena);
         }
 
@@ -371,7 +371,7 @@ namespace Semantica
                 //De lo contrario levantamos una excepcion
                 else
                 {
-                    throw new Error("Eror de semantica en la linea " + (linea - 1) + ": No podemos asignar un <" + dominante + "> a un <" + getTipo(nombreVariable) + ">", log);
+                    throw new Error("\nError de semantica en la linea " + (linea - 1) + ": No podemos asignar un <" + dominante + "> a un <" + getTipo(nombreVariable) + ">", log);
                 }
                 if (evaluacionASM)
                 {
@@ -494,12 +494,11 @@ namespace Semantica
             }
             string etiquetaInicioFor = "InicioFor" + contadorFors;
             string etiquetaFinFor = "FinFor" + contadorFors;
-            asm.WriteLine(etiquetaInicioFor);
             match("for");
             match("(");
             Asignacion(evaluacion, evaluacionASM);
             string nombreIncremento = getContenido();
-            bool validarFor = true;
+            bool validarFor;
             int posicionFor = i - getContenido().Length;
             int lineaFor = linea;
             float incrementoFor;
@@ -546,7 +545,7 @@ namespace Semantica
                     asm.WriteLine(etiquetaFinFor + ":");
                 }
                 evaluacionASM = false;
-            }while (validarFor);
+            } while (validarFor);
         }
 
         //Incremento -> Identificador ++ | --
@@ -578,7 +577,7 @@ namespace Semantica
                         }
                         else
                         {
-                            throw new Error("Eror de semantica en la linea " + (linea) + ": No podemos asignar un <" + dominante + "> a un <" + getTipo(nombreVariable) + ">", log);
+                            throw new Error("\nError de semantica en la linea " + (linea) + ": No podemos asignar un <" + dominante + "> a un <" + getTipo(nombreVariable) + ">", log);
                         }
                     }
                     match(Tipos.IncrementoTermino);
@@ -909,16 +908,10 @@ namespace Semantica
                 Expresion(evaluacionASM);
                 float resultado = stack.Pop();
                 decimal resultadoEntero = (decimal)Math.Truncate(resultado);
-                asm.WriteLine("POP AX");
                 if (evaluacion)
                 {
                     Console.Write(resultado);
                     //Imprimir numeros usando la macro
-                    if (evaluacionASM)
-                    {
-                        asm.WriteLine("MOV AX, " + resultadoEntero);
-                        asm.WriteLine("CALL PRINT_NUM");
-                    }
                     /*
                     asm.WriteLine("PRINT " + "\"PARTE ENTERA:\"");
                     asm.WriteLine("MOV AX," + Math.Truncate(resultado));
@@ -928,6 +921,12 @@ namespace Semantica
                     asm.WriteLine("MOV AX, DX");
                     asm.WriteLine("CALL PRINT_NUM");
                     */
+                }
+                if (evaluacionASM)
+                {
+                    asm.WriteLine("POP AX");
+                    //asm.WriteLine("MOV AX, " + resultadoEntero);
+                    asm.WriteLine("CALL PRINT_NUM");
                 }
             }
             match(")");
@@ -1113,11 +1112,11 @@ namespace Semantica
                 }
                 if (getTipo(getContenido()) == Variable.TipoDato.Char)
                 {
-                    if(evaluacionASM)
+                    if (evaluacionASM)
                     {
                         asm.WriteLine("MOV AL, " + getContenido());
                         asm.WriteLine("MOV AH, 0");
-                    }  
+                    }
                 }
                 else
                 {

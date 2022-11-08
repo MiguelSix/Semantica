@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "MqbSqrsAgbmsh+C2rYju9TWlfnbRRu3ZbMM99JM8gz//Zqu5IVp53ZqWfjjlnqHt58yDpFfkIhYRc9kxZ6g8oA==",
+  "dgSpecHash": "5SFsR2x1wG46qFrGft6B6skyrzwooeiRQAt6U4YhB+kbAOUMO7+6WAU8yUd2y6ko1yzJoct6tex+CNa1d+bEnw==",
   "success": true,
   "projectFilePath": "C:\\Users\\wachi\\OneDrive\\Escritorio\\AUTOMATAS\\Semantica\\Semantica.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\wachi\\.nuget\\packages\\mathnet.numerics\\5.0.0\\mathnet.numerics.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

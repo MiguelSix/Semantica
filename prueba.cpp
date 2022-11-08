@@ -7,15 +7,38 @@ int a, d, altura, i, j, y;
 char z;
 // Este programa calcula el volumen de un cilindro.
 void main(){
-    i = 0;
-    while (i < 10){
+
+    for(j = 0; j < 10; j+=2){
+        printf(j);
         printf("\n");
-        printf("hola");
-        i+= 2;
     }
 
-    for(j = 0; j < 10; j++){
-        printf("\n");
-        printf(j);
+    /*
+   i = 0;
+   while(i < 10){
+       printf("\n");
+       printf(i);
+       i++;
+   }
+
+   */
+
+    a = 2;
+    d = 3;
+    printf("\n");
+    printf("\n");
+    printf(a);
+    printf("\n");
+    printf(d);
+    printf("\n");
+
+    if(a > d){
+        printf("a es mayor que d");
+    }else{
+        d = 2;
+        printf("d es mayor que a");
+        if (a == d){
+            printf("\na es igual a d");
+        }
     }
 }

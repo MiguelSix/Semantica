@@ -13,3 +13,5 @@ C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\obj\Debug\net6.0\refint\S
 C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\obj\Debug\net6.0\Semantica.pdb
 C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\obj\Debug\net6.0\Semantica.genruntimeconfig.cache
 C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\obj\Debug\net6.0\ref\Semantica.dll
+C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\bin\Debug\net6.0\MathNet.Numerics.dll
+C:\Users\wachi\OneDrive\Escritorio\AUTOMATAS\Semantica\obj\Debug\net6.0\Semantica.csproj.CopyComplete

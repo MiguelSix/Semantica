@@ -6,20 +6,21 @@ namespace Semantica
     {
         static void Main(string[] args)
         {
-            try
+            using (Lenguaje lenguaje = new Lenguaje())
             {
-                using (Lenguaje lenguaje = new Lenguaje())
+                try
                 {
                     lenguaje.Programa();
                 }
-                //Lenguaje a = new Lenguaje("C:\\Users\\wachi\\OneDrive\\Escritorio\\AUTOMATAS\\Semantica\\prueba.cpp");
-                //a.Programa();
-                //a.cerrar();
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            //Lenguaje a = new Lenguaje("C:\\Users\\wachi\\OneDrive\\Escritorio\\AUTOMATAS\\Semantica\\prueba.cpp");
+            //a.Programa();
+            //a.cerrar();
         }
+
     }
 }
