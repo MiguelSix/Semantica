@@ -9,6 +9,9 @@ char z;
 void main()
 {
 
+    printf("\nHolaaa\ncoco");
+
+/*
     for (j = 0; j < 10; j += 2)
     {
         printf(j);
@@ -62,4 +65,5 @@ void main()
     a = 15;
     a-= 5;
     printf(a);
+    */
 }

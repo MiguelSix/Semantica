@@ -15,15 +15,15 @@ using System.Threading.Tasks;
 *       d) Considerar el inciso b) y c) para el for -------------> OK
 *       e) Considerar el inciso b) y c) para el while y el do-while -------------> OK
 * 3. Requerimiento 3:
-*       a) Considerar las variables y los casteos de las expresiones matematicas en assembly
+*       a) Considerar las variables y los casteos de las expresiones matematicas en assembly -------------> OK (CREO)
 *       b) Considerar el residuo de la division en assembly -------------> OK 
 *       c) Programar el printf y el scanf en assembly   -------------> OK
 * 4. Requerimiento 4:
 *       a) Programar el "else" en assembly -------------> OK
-*       b) Programar el "for" en assembly -------------> MAS O MENOS (CHECAR INCREMENTOS E IMPRESIONES)
+*       b) Programar el "for" en assembly -------------> OK
 * 5. Requerimiento 5:
 *       a) Programar el "while" en assembly -------------> OK
-*       b) Programar el "do-while" en assembly -------------> OK, PERO MARCA ERROR DE SINTAXIS NOSE PQ
+*       b) Programar el "do-while" en assembly -------------> OK
 */
 
 
@@ -63,6 +63,22 @@ namespace Semantica
             string aux = cadena;
             cadena = cadena.Replace("\\n", "\n");
             cadena = cadena.Replace("\\t", "\t");
+
+            //Split para separar los saltos de linea
+            string [] subCadenas = aux.Split("\\n");
+            int i = 0;
+            foreach (string cad in subCadenas) 
+            {  
+                if(i == subCadenas.Length - 1)
+                {
+                    asm.WriteLine("PRINT \"" + cad + "\"");
+                }
+                else
+                {
+                    asm.WriteLine("PRINTN \"" + cad + "\"");
+                }
+                i++;
+            }
             /*
             if(cadena.Contains("\n"))
             {
@@ -76,10 +92,11 @@ namespace Semantica
             {
                 asm.WriteLine("PRINT " + "\"" + cadena + "\"");
             }
-            */
+            
             aux = aux.Replace("\\n", "");
             aux = aux.Replace("\\t", "");
             asm.WriteLine("PRINTN " + "\"" + aux + "\"");
+            */
             Console.Write(cadena);
         }
 
