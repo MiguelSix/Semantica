@@ -9,11 +9,6 @@ namespace Semantica
     {
         public Error(string mensaje, StreamWriter log): base(mensaje)
         {
-            /*
-            Console.WriteLine();
-            Console.WriteLine(mensaje);
-            log.WriteLine();
-            */
             log.WriteLine("\n" + mensaje);
         }
     }

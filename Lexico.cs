@@ -72,7 +72,6 @@ namespace Semantica
             log.AutoFlush = true;
             asm = new StreamWriter("C:\\Users\\wachi\\OneDrive\\Escritorio\\AUTOMATAS\\Semantica\\prueba.asm");
             asm.AutoFlush = true;
-            //log.WriteLine("Primer constructor");
             log.WriteLine("Archivo: prueba.cpp");
             log.WriteLine("Fecha: " + DateTime.Now);
             asm.WriteLine(";Archivo: prueba.asm");
@@ -85,7 +84,7 @@ namespace Semantica
             }
             else
             {
-                throw new Error("Error: El archivo prueba no existe", log);
+                throw new Error("\nError: El archivo prueba no existe", log);
             }
         }
         public Lexico(string nombre)
@@ -97,7 +96,6 @@ namespace Semantica
             string pathAsm = Path.ChangeExtension(nombre, ".asm");
             asm = new StreamWriter(pathAsm);
             asm.AutoFlush = true;
-            //log.WriteLine("Segundo constructor");
             log.WriteLine("Archivo: " + nombre);
             log.WriteLine("Fecha: " + DateTime.Now);
             asm.WriteLine(";Archivo: " + nombre);
@@ -108,7 +106,7 @@ namespace Semantica
             }
             else
             {
-                throw new Error("Error: El archivo " + Path.GetFileName(nombre) + " no existe ", log);
+                throw new Error("\nError: El archivo " + Path.GetFileName(nombre) + " no existe ", log);
             }
         }
         public void cerrar()
@@ -344,19 +342,19 @@ namespace Semantica
                 //Requerimiento 9 agregar el numero de linea en el error
                 if (getContenido()[0] == '"')
                 {
-                    throw new Error("Error lexico: No se cerro la cadena con \" en linea: " + linea, log);
+                    throw new Error("\nError lexico: No se cerro la cadena con \" en linea: " + linea, log);
                 }
                 else if (getContenido()[0] == '\'')
                 {
-                    throw new Error("Error lexico: No se cerro el caracter con ' en linea: " + linea, log);
+                    throw new Error("\nError lexico: No se cerro el caracter con ' en linea: " + linea, log);
                 }
                 else if (getClasificacion() == Tipos.Numero)
                 {
-                    throw new Error("Error lexico: Se espera un digito en linea: " + linea, log);
+                    throw new Error("\nError lexico: Se espera un digito en linea: " + linea, log);
                 }
                 else
                 {
-                    throw new Error("Error lexico: No definido en linea: " + linea, log);
+                    throw new Error("\nError lexico: No definido en linea: " + linea, log);
                 }
             }
             else if (!FinArchivo())

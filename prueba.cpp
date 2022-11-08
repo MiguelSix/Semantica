@@ -25,16 +25,6 @@ void main()
 
     printf("\n");
 
-    a = 0;
-    do
-    {
-        printf("\n");
-        printf(a);
-        a+=3;
-    } while (a < 20);
-
-    }
-
     a = 2;
     d = 3;
     printf("\n");
@@ -57,4 +47,19 @@ void main()
             printf("\na es igual a d");
         }
     }
+
+    printf("\n");
+    printf("\n");
+
+    a = 0;
+    do{
+        printf(a);
+        printf("\n");
+        a++;
+    } while (a < 10);
+
+    printf("\n");
+    a = 15;
+    a-= 5;
+    printf(a);
 }

@@ -19,11 +19,11 @@ using System.Threading.Tasks;
 *       b) Considerar el residuo de la division en assembly -------------> OK 
 *       c) Programar el printf y el scanf en assembly   -------------> OK
 * 4. Requerimiento 4:
-*       a) Programar el "else" en assembly
-*       b) Programar el "for" en assembly
+*       a) Programar el "else" en assembly -------------> OK
+*       b) Programar el "for" en assembly -------------> MAS O MENOS (CHECAR INCREMENTOS E IMPRESIONES)
 * 5. Requerimiento 5:
-*       a) Programar el "while" en assembly
-*       b) Programar el "do-while" en assembly
+*       a) Programar el "while" en assembly -------------> OK
+*       b) Programar el "do-while" en assembly -------------> OK, PERO MARCA ERROR DE SINTAXIS NOSE PQ
 */
 
 
@@ -38,14 +38,17 @@ namespace Semantica
         int contadorFors;
         int contadorWhile;
         int contadorDoWhile;
+        string forASM;
         public Lenguaje()
         {
             contadorIfs = contadorFors = contadorWhile = contadorDoWhile = 0;
+            forASM = "";
 
         }
         public Lenguaje(string nombre) : base(nombre)
         {
             contadorIfs = contadorFors = contadorWhile = contadorDoWhile = 0;
+            forASM = "";
 
         }
         //Destructor
@@ -340,7 +343,7 @@ namespace Semantica
             dominante = Variable.TipoDato.Char;
             if (getClasificacion() == Tipos.IncrementoTermino || getClasificacion() == Tipos.IncrementoFactor)
             {
-                modificaValor(nombreVariable, Incremento(evaluacion, nombreVariable, evaluacionASM));
+                modificaValor(nombreVariable, Incremento(evaluacion, nombreVariable, evaluacionASM, ""));
                 match(Tipos.FinSentencia);
             }
             else
@@ -437,14 +440,10 @@ namespace Semantica
         //Do -> do bloque de instrucciones | intruccion while(Condicion)
         private void Do(bool evaluacion, bool evaluacionASM)
         {
-            if (evaluacionASM)
-            {
-                ++contadorDoWhile;
-            }
             string etiquetaInicioDo = "inicioDo" + contadorDoWhile;
-            string etiquetaFinDo = "finDo" + contadorDoWhile;
-            bool validarDo = evaluacion;
-            int posicionDo = i - getContenido().Length;
+            string etiquetaFinDo = "finDo" + contadorDoWhile++;
+            bool validarDo;
+            int posicionDo = i;
             int lineaDo = linea;
             match("do");
             do
@@ -455,11 +454,11 @@ namespace Semantica
                 }
                 if (getContenido() == "{")
                 {
-                    BloqueInstrucciones(validarDo, evaluacionASM);
+                    BloqueInstrucciones(evaluacion, evaluacionASM);
                 }
                 else
                 {
-                    Instruccion(validarDo, evaluacionASM);
+                    Instruccion(evaluacion, evaluacionASM);
                 }
                 match("while");
                 match("(");
@@ -467,9 +466,9 @@ namespace Semantica
                 validarDo = Condicion(etiquetaFinDo, evaluacionASM);
                 if (!evaluacion)
                 {
-                    validarDo = evaluacion;
+                    validarDo = false;
                 }
-                else if (validarDo)
+                if (validarDo)
                 {
                     i = posicionDo;
                     linea = lineaDo;
@@ -490,12 +489,6 @@ namespace Semantica
         //For -> for(Asignacion Condicion; Incremento) BloqueInstruccones | Intruccion 
         private void For(bool evaluacion, bool evaluacionASM)
         {
-            /*
-            if (evaluacionASM)
-            {
-                ++contadorFors;
-            }
-            */
             string etiquetaInicioFor = "InicioFor" + contadorFors;
             string etiquetaFinFor = "FinFor" + contadorFors++;
             match("for");
@@ -520,7 +513,8 @@ namespace Semantica
                     validarFor = false;
                 }
                 match(Tipos.Identificador);
-                incrementoFor = Incremento(validarFor, nombreIncremento, evaluacionASM);
+                incrementoFor = Incremento(validarFor, nombreIncremento, evaluacionASM, "for");
+                string aux = forASM;
                 match(")");
                 if (getContenido() == "{")
                 {
@@ -545,6 +539,7 @@ namespace Semantica
                 }
                 if (evaluacionASM)
                 {
+                    asm.WriteLine(aux);
                     asm.WriteLine("JMP " + etiquetaInicioFor);
                     asm.WriteLine(etiquetaFinFor + ":");
                 }
@@ -553,7 +548,7 @@ namespace Semantica
         }
 
         //Incremento -> Identificador ++ | --
-        private float Incremento(bool evaluacion, string nombreVariable, bool evaluacionASM)
+        private float Incremento(bool evaluacion, string nombreVariable, bool evaluacionASM, string tipo)
         {
             float valorVariable = getValor(nombreVariable);
             float valor;
@@ -563,6 +558,9 @@ namespace Semantica
                 case "++":
                     if (evaluacionASM)
                     {
+                        if(tipo == "for")
+                            forASM  = forASM + "INC " + nombreVariable + "\n";
+                        else
                         asm.WriteLine("INC " + nombreVariable);
                     }
                     if (evaluacion)
@@ -589,7 +587,10 @@ namespace Semantica
                 case "--":
                     if (evaluacionASM)
                     {
-                        asm.WriteLine("DEC " + nombreVariable);
+                        if(tipo == "for")
+                            forASM = forASM + "DEC " + nombreVariable + "\n";
+                        else
+                            asm.WriteLine("DEC " + nombreVariable);
                     }
                     match(Tipos.IncrementoTermino);
                     if (evaluacion)
@@ -603,7 +604,10 @@ namespace Semantica
                     valor = stack.Pop();
                     if (evaluacionASM)
                     {
-                        asm.WriteLine("ADD " + nombreVariable + ", " + valor);
+                        if(tipo == "for")
+                            forASM  = forASM + "ADD " + nombreVariable + ", " + valor + "\n";
+                        else
+                            asm.WriteLine("ADD " + nombreVariable + ", " + valor);
                     }
                     if (dominante < evaluaNumero(valor))
                     {
@@ -627,7 +631,10 @@ namespace Semantica
                     valor = stack.Pop();
                     if (evaluacionASM)
                     {
-                        asm.WriteLine("SUB " + nombreVariable + ", " + valor);
+                        if(tipo == "for")
+                            forASM  = forASM + "SUB " + nombreVariable + ", " + valor + "\n";
+                        else
+                            asm.WriteLine("SUB " + nombreVariable + ", " + valor);
                     }
                     if (dominante < evaluaNumero(valor))
                     {
@@ -651,7 +658,10 @@ namespace Semantica
                     valor = stack.Pop();
                     if (evaluacionASM)
                     {
-                        asm.WriteLine("MUL " + nombreVariable + ", " + valor);
+                        if(tipo == "for")
+                            forASM  = forASM + "MUL " + nombreVariable + ", " + valor + "\n";
+                        else
+                            asm.WriteLine("MUL " + nombreVariable + ", " + valor);
                     }
                     if (dominante < evaluaNumero(valor))
                     {
@@ -675,7 +685,10 @@ namespace Semantica
                     valor = stack.Pop();
                     if (evaluacionASM)
                     {
-                        asm.WriteLine("DIV " + nombreVariable + ", " + valor);
+                        if(tipo == "for")
+                            forASM  = forASM + "DIV " + nombreVariable + ", " + valor + "\n";
+                        else
+                            asm.WriteLine("DIV " + nombreVariable + ", " + valor);
                     }
                     if (dominante < evaluaNumero(valor))
                     {
@@ -699,7 +712,10 @@ namespace Semantica
                     valor = stack.Pop();
                     if (evaluacionASM)
                     {
-                        asm.WriteLine("MOD " + nombreVariable + ", " + valor);
+                        if(tipo == "for")
+                            forASM  = forASM + "MOD " + nombreVariable + ", " + valor + "\n";
+                        else
+                            asm.WriteLine("MOD " + nombreVariable + ", " + valor);
                     }
                     if (dominante < evaluaNumero(valor))
                     {
