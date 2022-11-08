@@ -166,6 +166,8 @@ namespace Semantica
             variablesASM();
             Main();
             displayVariables();
+            asm.WriteLine("MOV AX, 4C00H");
+            asm.WriteLine("INT 21H");
             asm.WriteLine("RET");
             asm.WriteLine("DEFINE_SCAN_NUM");
             asm.WriteLine("DEFINE_PRINT_NUM");
@@ -223,7 +225,7 @@ namespace Semantica
                 }
                 else
                 {
-                    throw new Error("Error de sintaxis, variable duplicada <" + getContenido() + "> en la linea: " + linea, log);
+                    throw new Error("\nError de sintaxis, variable duplicada <" + getContenido() + "> en la linea: " + linea, log);
                 }
             }
             match(Tipos.Identificador);
@@ -488,12 +490,14 @@ namespace Semantica
         //For -> for(Asignacion Condicion; Incremento) BloqueInstruccones | Intruccion 
         private void For(bool evaluacion, bool evaluacionASM)
         {
+            /*
             if (evaluacionASM)
             {
                 ++contadorFors;
             }
+            */
             string etiquetaInicioFor = "InicioFor" + contadorFors;
-            string etiquetaFinFor = "FinFor" + contadorFors;
+            string etiquetaFinFor = "FinFor" + contadorFors++;
             match("for");
             match("(");
             Asignacion(evaluacion, evaluacionASM);
@@ -1110,23 +1114,9 @@ namespace Semantica
                 {
                     dominante = getTipo(getContenido());
                 }
-                if (getTipo(getContenido()) == Variable.TipoDato.Char)
-                {
-                    if (evaluacionASM)
-                    {
-                        asm.WriteLine("MOV AL, " + getContenido());
-                        asm.WriteLine("MOV AH, 0");
-                    }
-                }
-                else
-                {
-                    if (evaluacionASM)
-                    {
-                        asm.WriteLine("MOV AX, " + getContenido());
-                    }
-                }
                 if (evaluacionASM)
                 {
+                    asm.WriteLine("MOV AX, " + getContenido());
                     asm.WriteLine("PUSH AX");
                 }
                 match(Tipos.Identificador);
