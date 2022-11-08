@@ -1,10 +1,10 @@
 Archivo: prueba.cpp
-Fecha: 07/11/2022 23:52:55
+Fecha: 08/11/2022 7:19:42
 
-10 = 10
+13 = 13
 
 
-2 
+5 
 
 Variables:
 area, Float, 0
@@ -12,7 +12,7 @@ radio, Float, 0
 pi, Float, 0
 resultado, Float, 0
 x, Float, 0
-a, Int, 5
+a, Int, 3
 d, Int, 0
 altura, Int, 0
 i, Int, 0

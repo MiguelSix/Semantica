@@ -8,10 +8,9 @@ char z;
 // Este programa calcula el volumen de un cilindro.
 void main()
 {
-
     printf("\nHolaaa\ncoco");
-    a = 10;
-    a/=2;
+    a = 13;
+    a%=5;
     printf("\n");
     printf(a);
 

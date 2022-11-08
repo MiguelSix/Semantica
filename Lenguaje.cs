@@ -67,9 +67,10 @@ namespace Semantica
             //Split para separar los saltos de linea
             string [] subCadenas = aux.Split("\\n");
             int i = 0;
+            int tam = subCadenas.Length - 1;
             foreach (string cad in subCadenas) 
             {  
-                if(i == subCadenas.Length - 1)
+                if(i == tam)
                 {
                     asm.WriteLine("PRINT \"" + cad + "\"");
                 }
@@ -710,12 +711,16 @@ namespace Semantica
                     {
                         if(tipo == "for")
                         {
-                            forASM  = forASM + "DIV " + nombreVariable + "\n";
+                            forASM  = forASM + "MOV BX, AX" + "\n";
+                            forASM  = forASM + "MOV AX, " + nombreVariable + "\n";
+                            forASM  = forASM + "DIV BX" + "\n";
                             forASM  = forASM + "MOV " + nombreVariable + ", AX" + "\n";
                         }
                         else
                         {
-                            asm.WriteLine("DIV " + nombreVariable);
+                            asm.WriteLine("MOV BX, AX");
+                            asm.WriteLine("MOV AX," + nombreVariable);
+                            asm.WriteLine("DIV BX");
                             asm.WriteLine("MOV " + nombreVariable + ", AX");
                         }
                     }
@@ -741,10 +746,19 @@ namespace Semantica
                     valor = stack.Pop();
                     if (evaluacionASM)
                     {
-                        if(tipo == "for")
-                            forASM  = forASM + "MOD " + nombreVariable + ", " + valor + "\n";
+                        if(tipo == "for"){
+                            forASM  = forASM + "MOV BX, AX" + "\n";
+                            forASM  = forASM + "MOV AX, " + nombreVariable + "\n";
+                            forASM  = forASM + "DIV BX" + "\n";
+                            forASM  = forASM + "MOV " + nombreVariable + ", DX" + "\n";
+                        }
                         else
-                            asm.WriteLine("MOD " + nombreVariable + ", " + valor);
+                        {
+                            asm.WriteLine("MOV BX, AX");
+                            asm.WriteLine("MOV AX," + nombreVariable);
+                            asm.WriteLine("DIV BX");
+                            asm.WriteLine("MOV " + nombreVariable + ", DX");
+                        }
                     }
                     if (dominante < evaluaNumero(valor))
                     {
