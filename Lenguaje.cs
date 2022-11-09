@@ -63,26 +63,6 @@ namespace Semantica
             string aux = cadena;
             cadena = cadena.Replace("\\n", "\n");
             cadena = cadena.Replace("\\t", "\t");
-
-            //Split para separar los saltos de linea
-            string[] subCadenas = aux.Split("\\n");
-            int i = 0;
-            int tam = subCadenas.Length - 1;
-            if (evaluacionASM)
-            {
-                foreach (string cad in subCadenas)
-                {
-                    if (i == tam)
-                    {
-                        asm.WriteLine("PRINT \"" + cad + "\"");
-                    }
-                    else
-                    {
-                        asm.WriteLine("PRINTN \"" + cad + "\"");
-                    }
-                    i++;
-                }
-            }
             /*
             if(cadena.Contains("\n"))
             {
@@ -963,6 +943,7 @@ namespace Semantica
         {
             match("printf");
             match("(");
+            string aux = getContenido();
             if (getClasificacion() == Tipos.Cadena)
             {
                 if (evaluacion)
@@ -970,6 +951,26 @@ namespace Semantica
                     secuenciasEscape(getContenido(), evaluacionASM);
                 }
                 match(Tipos.Cadena);
+                aux = aux.Trim('"');
+                //Split para separar los saltos de linea
+                string[] subCadenas = aux.Split("\\n");
+                int i = 0;
+                int tam = subCadenas.Length - 1;
+                if (evaluacionASM)
+                {
+                    foreach (string cad in subCadenas)
+                    {
+                        if (i == tam)
+                        {
+                            asm.WriteLine("PRINT \"" + cad + "\"");
+                        }
+                        else
+                        {
+                            asm.WriteLine("PRINTN \"" + cad + "\"");
+                        }
+                        i++;
+                    }
+                }
             }
             else
             {

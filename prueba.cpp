@@ -36,92 +36,80 @@ void main()
     j = 0;
     printf("\n");
     */
-
-    while (j<3){
-            printf("\n");
-            //printf(j);
-            printf("Hola");
-            j+=1;
-        }
-
 /*
-    //Requerimiento 5.- Levanta una excepcion en el scanf si la captura no es un numero
+    for (i = 0; i < 4; i++)
+    {
+        j = i;
+        while (j % 2 != 0)
+        {
+            printf("\n");
+            printf(j);
+            printf("\n");
+            printf("El numero es impar");
+            j++;
+        }
+    }
+
+    printf("\n");
     printf("Introduce la altura de la piramide: ");
     scanf("altura", &altura);
-    //Requerimiento 6.- Ejecutar el for y for anidado
-    if(altura >2) {
-        for(i = altura; i > 0; i-=1){
-            j = 0; 
-            while(j < altura-i){
-                if(j%2 == 0){
-                    printf("*");
-                }
-                else{
-                    printf("-");//Requerimiento 4.- evalua nuevamente los else
-                }
-                j+=1; 
+    if(altura > 2)
+    {
+        for (i = altura; i > 0; i-=1)
+        {
+            j = 0;
+            while (j < altura - i)
+            {
+                printf("*");
+                j+=1;
             }
             printf("\n");
         }
-        k = 0; 
-        do
-        {
-            printf("-");
-            k += 2; 
-        } while(k < altura*2);
-        printf("\n"); 
-    }else
-    {
-        printf("\nError: la altura debe de ser mayor que 2\n");
     }
 
-    /*
-    i = 0;
-    while (i < 10)
-    {
-        printf("\n");
-        printf(i);
-        i++;
-    }
+    */
 
-    printf("\n");
-
-    a = 2;
-    d = 3;
-    printf("\n");
-    printf("\n");
-    printf(a);
-    printf("\n");
-    printf(d);
-    printf("\n");
-
-    if (a > d)
-    {
-        printf("a es mayor que d");
-    }
-    else
-    {
-        d = 2;
-        printf("d es mayor que a");
-        if (a == d)
-        {
-            printf("\na es igual a d");
+     //Requerimiento 5.- Levanta una excepcion en el scanf si la captura no es un numero
+     printf("Introduce la altura de la piramide: ");
+     scanf("altura", &altura);
+     //Requerimiento 6.- Ejecutar el for y for anidado
+     if(altura >2) {
+         for(i = altura; i > 0; i-=1){
+             j = 0;
+             while(j < altura-i){
+                 if(j%2 == 0){
+                     printf("*");
+                 }
+                 else{
+                     printf("-");//Requerimiento 4.- evalua nuevamente los else
+                 }
+                 j+=1;
+             }
+             printf("\n");
+         }
+         k = 0;
+         do
+         {
+             printf("-");
+             k += 2;
+         } while(k < altura*2);
+         printf("\n");
+     }else
+     {
+         printf("\nError: la altura debe de ser mayor que 2\n");
+     }
+     if(1 != 1){
+        printf("Esto no se debe imprimir");
+        if(2 == 2){
+            printf("Esto tampoco");     //Requerimiento 4.- evalua nuevamente los if respecto al parametro que reciben
         }
     }
-
-    printf("\n");
-    printf("\n");
-
-    a = 0;
-    do{
-        printf(a);
-        printf("\n");
-        a++;
-    } while (a < 10);
-
-    printf("\n");
-    a = 15;
-    a-= 5;
+    a = 258;
+    printf("Valor de variable int 'a' antes del casteo: ");
     printf(a);
-    */
+    y = (char)(a);  //Requerimiento 2 y 3, actualiza el dominante y convierte el valor con una funcion
+    printf("\nValor de variable char 'y' despues del casteo de a: ");
+    printf(y);
+    printf("\nA continuacion se intenta asignar un int a un char sin usar casteo: \n");
+    //y = a; //Requerimiento 1.- debe marcar error 
 }
