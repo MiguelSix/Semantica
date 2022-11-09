@@ -43,19 +43,18 @@ namespace Semantica
         {
             contadorIfs = contadorFors = contadorWhile = contadorDoWhile = 0;
             forASM = "";
-
         }
         public Lenguaje(string nombre) : base(nombre)
         {
             contadorIfs = contadorFors = contadorWhile = contadorDoWhile = 0;
             forASM = "";
-
         }
         //Destructor
         public void Dispose()
         {
             Console.WriteLine("\n\nDestructor ejecutado exitosamente");
             cerrar();
+            //GC.SuppressFinalize(this);
         }
         private void secuenciasEscape(string cadena, bool evaluacionASM)
         {

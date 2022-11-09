@@ -1,5 +1,5 @@
 ;Archivo: prueba.asm
-;Fecha: 08/11/2022 18:57:34
+;Fecha: 08/11/2022 19:35:07
 #make_COM#
 include 'emu8086.inc'
 ORG 100h
@@ -172,9 +172,6 @@ MOV AX, y
 PUSH AX
 POP AX
 CALL PRINT_NUM
-PRINTN ""
-PRINTN "A continuacion se intenta asignar un int a un char sin usar casteo: "
-PRINT ""
 MOV AX, 4C00H
 INT 21H
 RET

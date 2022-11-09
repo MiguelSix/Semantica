@@ -110,6 +110,4 @@ void main()
     y = (char)(a);  //Requerimiento 2 y 3, actualiza el dominante y convierte el valor con una funcion
     printf("\nValor de variable char 'y' despues del casteo de a: ");
     printf(y);
-    printf("\nA continuacion se intenta asignar un int a un char sin usar casteo: \n");
-    //y = a; //Requerimiento 1.- debe marcar error 
 }
